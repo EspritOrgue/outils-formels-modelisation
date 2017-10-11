@@ -40,7 +40,7 @@ public func createCorrectTaskManager() -> PTNet {
     let taskPool    = PTPlace(named: "taskPool")
     let processPool = PTPlace(named: "processPool")
     let inProgress  = PTPlace(named: "inProgress")
-    let complement = PTPlace(named: "complement")
+    let complement = PTPlace(named: "complement") // Ajout d'une nouvelle place
 
     // Transitions
     let create      = PTTransition(
@@ -63,7 +63,7 @@ public func createCorrectTaskManager() -> PTNet {
         named          : "fail",
         preconditions  : [PTArc(place: inProgress)],
       postconditions : [PTArc(place: complement)])
-
+    // On link la nouvelle à create (en postconditions), exec (en preconditions) et fail (en postconditions)
     // P/T-net
     return PTNet(
         places: [taskPool, processPool, inProgress, complement],
