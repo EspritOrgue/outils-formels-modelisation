@@ -62,8 +62,8 @@ let m24 = exec2.fire(from: m23!)
 print("m4 (exec) ",m24!) // m4 : Dans ce nouveau cas, une seule exécution est possible
 let m25 = success2.fire(from: m24!)
 print("m5 (success) ",m25!) // Cas du success
-let m27 = fail2.fire(from: m24!)
-print("m5 (fail) ",m27!) // Cas du fail
+let m26 = fail2.fire(from: m24!)
+print("m5 (fail) ",m26!) // Cas du fail
 // On corrige l'erreur, par bloquant l'exécution à 1 task/1 process
 // par le biais d'une nouvelle place (nommé "complement" ici)
 // Il n'est donc possible que d'envoyer 1 exec et non 2 comme montré plus haut.
