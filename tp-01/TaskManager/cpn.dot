@@ -1,29 +1,29 @@
 digraph G {
 subgraph place {
 node [shape=circle, width=.5];
+"inProgress" [label="", xlabel="inProgress"];
 "processPool" [label="", xlabel="processPool"];
 "complement" [label="", xlabel="complement"];
 "taskPool" [label="", xlabel="taskPool"];
-"inProgress" [label="", xlabel="inProgress"];
 }
 subgraph transitions {
 node [shape=rect, width=.5, height=.5];
-"create";
-"success";
-"exec";
-"spawn";
 "fail";
+"exec";
+"success";
+"create";
+"spawn";
 }
-"create" -> "taskPool";
-"create" -> "complement";
-"taskPool" -> "success";
-"inProgress" -> "success";
-"processPool" -> "exec";
-"taskPool" -> "exec";
-"complement" -> "exec";
-"exec" -> "taskPool";
-"exec" -> "inProgress";
-"spawn" -> "processPool";
 "inProgress" -> "fail";
 "fail" -> "complement";
+"complement" -> "exec";
+"taskPool" -> "exec";
+"processPool" -> "exec";
+"exec" -> "taskPool";
+"exec" -> "inProgress";
+"taskPool" -> "success";
+"inProgress" -> "success";
+"create" -> "taskPool";
+"create" -> "complement";
+"spawn" -> "processPool";
 }
