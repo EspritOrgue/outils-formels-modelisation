@@ -1,9 +1,11 @@
 import TaskManagerLib
+import Foundation
 
 // Exercice 3
 print("Exercice 3: Problème du réseau de pétri")
 
 let taskManager = createTaskManager()
+try taskManager.saveAsDot(to: URL(fileURLWithPath: "pn.dot")) // Essai de sortie du fichier dot pour taskManager
 
 // Importation des transitions et des places du taskManager
 let create = taskManager.transitions.filter{$0.name == "create"}[0]
@@ -35,6 +37,7 @@ print("m6 (success) ",m6!) // Cas du success.
 //Exercice 4
 print("Exercice 4: Correct TaskManager")
 let correctTaskManager = createCorrectTaskManager()
+try correctTaskManager.saveAsDot(to: URL(fileURLWithPath: "cpn.dot")) // Essai de sortie du fichier dot pour correctTaskManager
 
 // Importation des transitions et places du correctTaskManager
 let create2 = correctTaskManager.transitions.filter{$0.name == "create"}[0]
