@@ -11,6 +11,37 @@ public class MarkingGraph {
     }
 
 }
+func countMark(input:MarkingGraph) -> Int{
+  var visitedNode = [input]
+  var nodeToVisit = [input]
+
+  while let current = nodeToVisit.popLast(){
+    for (_, successor) in current.successors{
+      if !visitedNode.contains(where: {$0 === successor}){
+        visitedNode.append(successor)
+        nodeToVisit.append(successor)
+      }
+    }
+  }
+  return visitedNode.count
+  /*var nodeToVisit: [MarkingGraph] = []
+  var visitedNode: [MarkingGraph] = []
+  var inp = input
+
+  while !nodeToVisit.isEmpty{
+    for node in inp.successors.values{
+      if !visitedNode.contains{$0.marking == node.marking}{
+        nodeToVisit.append(node)
+      }
+    }
+    print("")
+    visitedNode.append(inp)
+    nodeToVisit.remove(at: 0)
+    inp = nodeToVisit[0]
+  }
+
+  return visitedNode.count;*/
+}
 
 // Ex. 1: Mutual exclusion
 do {
@@ -34,21 +65,7 @@ do {
     m2.successors = ["t1": m1]
 
     // Write your code here ...
-
-    var startingNode = m0.successors
-    var nodeCount: [[String: Int]] = []
-    while !startingNode.isEmpty{
-      for succ in startingNode{
-        if !nodeCount.contains(where:{$0 == succ.value.marking}){
-          nodeCount.append(succ.value.marking)
-          startingNode = succ.value.successors
-          print(1)
-        }
-        print(2)
-      }
-      print(3)
-    }
-    print(nodeCount)
+    print("1. \(countMark(input: m0))")
 }
 
 // Ex. 2: PetriNet 2
@@ -75,6 +92,7 @@ do {
     m8.successors = ["t2": m9]
 
     // Write your code here ...
+    print("2. \(countMark(input: m0))")
 }
 
 // Ex. 2: PetriNet 3
@@ -88,4 +106,5 @@ do {
     m2.successors = ["t2": m0]
 
     // Write your code here ...
+    print("3. \(countMark(input: m0))")
 }
