@@ -24,23 +24,6 @@ func countMark(input:MarkingGraph) -> Int{
     }
   }
   return visitedNode.count
-  /*var nodeToVisit: [MarkingGraph] = []
-  var visitedNode: [MarkingGraph] = []
-  var inp = input
-
-  while !nodeToVisit.isEmpty{
-    for node in inp.successors.values{
-      if !visitedNode.contains{$0.marking == node.marking}{
-        nodeToVisit.append(node)
-      }
-    }
-    print("")
-    visitedNode.append(inp)
-    nodeToVisit.remove(at: 0)
-    inp = nodeToVisit[0]
-  }
-
-  return visitedNode.count;*/
 }
 
 // Ex. 1: Mutual exclusion

@@ -12,6 +12,21 @@ public class MarkingGraph {
 
 }
 
+func countMark(input:MarkingGraph) -> Int{
+  var visitedNode = [input]
+  var nodeToVisit = [input]
+
+  while let current = nodeToVisit.popLast(){
+    for (_, successor) in current.successors{
+      if !visitedNode.contains(where: {$0 === successor}){
+        visitedNode.append(successor)
+        nodeToVisit.append(successor)
+      }
+    }
+  }
+  return visitedNode.count
+}
+
 let m0 = MarkingGraph(marking: ["a2": 1, "f8": 1, "b4": 0, "b6": 0, "b1": 0, "f5": 1, "a4": 1, "f6": 1, "f3": 1, "b9": 0, "a3": 1, "b0": 0, "f2": 1, "a8": 1, "a7": 1, "f0": 1, "a5": 1, "b3": 0, "f1": 1, "a1": 1, "b2": 0, "b5": 0, "f4": 1, "b7": 0, "f7": 1, "a6": 1, "a9": 1, "b8": 0, "f9": 1, "a0": 1])
 let m1 = MarkingGraph(marking: ["a2": 1, "f8": 1, "b4": 0, "b6": 0, "b1": 0, "f5": 0, "a4": 1, "f6": 0, "f3": 1, "b9": 0, "a3": 1, "b0": 0, "f2": 1, "a8": 1, "a7": 1, "f0": 1, "a5": 0, "b3": 0, "f1": 1, "a1": 1, "b2": 0, "b5": 1, "f4": 1, "b7": 0, "f7": 1, "a6": 1, "a9": 1, "b8": 0, "f9": 1, "a0": 1])
 let m2 = MarkingGraph(marking: ["a2": 1, "f8": 1, "b4": 0, "b6": 0, "b1": 0, "f5": 0, "a4": 1, "f6": 0, "f3": 1, "b9": 1, "a3": 1, "b0": 0, "f2": 1, "a8": 1, "a7": 1, "f0": 0, "a5": 0, "b3": 0, "f1": 1, "a1": 1, "b2": 0, "b5": 1, "f4": 1, "b7": 0, "f7": 1, "a6": 1, "a9": 0, "b8": 0, "f9": 0, "a0": 1])
@@ -258,3 +273,5 @@ m119.successors = ["e1": m60, "e8": m74, "e7": m72, "e0": m20, "e2": m71, "e9": 
 m120.successors = ["e8": m90, "e7": m96, "e2": m93, "e4": m20, "t0": m0, "e3": m87, "e6": m83, "e5": m111]
 m121.successors = ["e1": m37, "e0": m90, "e4": m74, "e2": m77, "t8": m0, "e3": m88, "e6": m84, "e5": m112]
 m122.successors = ["e8": m37, "t1": m0, "e7": m47, "e4": m60, "e3": m58, "e9": m53, "e6": m57, "e5": m113]
+
+print("1. \(countMark(input: m0))")
