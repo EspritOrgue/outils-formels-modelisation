@@ -23,6 +23,17 @@ else {
 let initialMarking: PTMarking = [r: 1, p: 0, t: 0, m: 0, w1: 1, s1: 0, w2: 1, s2: 0, w3: 1, s3: 0]
 
 // Create the marking graph (if possible).
-if let markingGraph = model.markingGraph(from: initialMarking) {
+if let markingGraph = model.markingGraph(from: initialMarking, transitions:model.transitions) {
     // Write here the code necessary to answer questions of Exercise 4.
+
+    let concurrentSmokers = markingGraph.contains{ node in
+      return (node.marking[s1]! + node.marking[s2]! + node.marking[s3]!) > 1
+    }
+
+    let multipleIngredients = markingGraph.contains{ node in
+      return (node.marking[p]! > 1)
+          || (node.marking[t]! > 1)
+          || (node.marking[m]! > 1)
+    }
+
 }
