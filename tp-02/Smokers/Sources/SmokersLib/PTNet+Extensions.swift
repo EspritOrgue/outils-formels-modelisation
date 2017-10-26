@@ -9,7 +9,7 @@ public class MarkingGraph {
         self.marking    = marking
         self.successors = successors
     }
-
+    /* Permet de compter le nombre d'état dans un graphe de marquage à partir d'un noeud */
     public func countMark(input:MarkingGraph) -> Int{
       var visitedNode: [MarkingGraph] = []
       var nodeToVisit: [MarkingGraph] = [input]
@@ -24,6 +24,7 @@ public class MarkingGraph {
       }
       return visitedNode.count
     }
+    /* Permet de savoir si il y a deux smokers dans le graphe */
     public func isTwoSmokers(input:MarkingGraph) -> Bool{
       var visitedNode: [MarkingGraph] = []
       var nodeToVisit: [MarkingGraph] = [input]
@@ -49,7 +50,8 @@ public class MarkingGraph {
       }
       return false
     }
-    public func isTwoRecipe(input:MarkingGraph) -> Bool{
+    /* Permet de savoir si deux ingrédients sont sur la table */
+    public func isTwoIng(input:MarkingGraph) -> Bool{
       var visitedNode: [MarkingGraph] = []
       var nodeToVisit: [MarkingGraph] = [input]
 
@@ -76,15 +78,15 @@ public class MarkingGraph {
 public extension PTNet {
   public func markingGraph(from marking: PTMarking) -> MarkingGraph? {
       // Write here the implementation of the marking graph generation.
-
+      // Initialiser les valeurs
       let m0 = MarkingGraph(marking: marking)
       var nodeToVisit : [MarkingGraph] = [m0]
       var visitedNode : [MarkingGraph] = []
-
+      // Boucler la liste à visiter
       while(!nodeToVisit.isEmpty) {
           let cur = nodeToVisit.remove(at:0)
           visitedNode.append(cur)
-
+          // Boucle les transitions
           for tran in transitions {
               if let firedMark = tran.fire(from: cur.marking) {
                       if let alreadyVisitedNode = visitedNode.first(where: { $0.marking == firedMark }) {

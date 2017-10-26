@@ -27,8 +27,8 @@ if let markingGraph = model.markingGraph(from: initialMarking) {
     // Write here the code necessary to answer questions of Exercise 4.
     print("4.1")
     print(markingGraph.countMark(input: markingGraph))
-    print("4.2")
+    print("\n4.2")
     print(markingGraph.isTwoSmokers(input: markingGraph))
-    print("4.3")
-    print(markingGraph.isTwoRecipe(input: markingGraph))
+    print("\n4.3")
+    print(markingGraph.isTwoIng(input: markingGraph))
 }
