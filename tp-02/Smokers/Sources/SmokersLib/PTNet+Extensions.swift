@@ -13,6 +13,7 @@ public class MarkingGraph {
     public func countMark(input:MarkingGraph) -> Int{
       var visitedNode: [MarkingGraph] = []
       var nodeToVisit: [MarkingGraph] = [input]
+      var stateList: [MarkingGraph] = []
 
       while let current = nodeToVisit.popLast(){
         visitedNode.append(current)
@@ -22,7 +23,12 @@ public class MarkingGraph {
           }
         }
       }
-      return visitedNode.count
+      for s in visitedNode {
+        if(!stateList.contains(where: {$0.marking == s.marking})){
+          stateList.append(s)
+        }
+      }
+      return stateList.count
     }
     /* Permet de savoir si il y a deux smokers dans le graphe */
     public func isTwoSmokers(input:MarkingGraph) -> Bool{
