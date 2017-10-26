@@ -4,41 +4,101 @@ public class MarkingGraph {
 
     public let marking   : PTMarking
     public var successors: [PTTransition: MarkingGraph]
-    public var state: [MarkingGraph]
 
     public init(marking: PTMarking, successors: [PTTransition: MarkingGraph] = [:]) {
         self.marking    = marking
         self.successors = successors
-        self.state = []
+    }
+
+    public func countMark(input:MarkingGraph) -> Int{
+      var visitedNode: [MarkingGraph] = []
+      var nodeToVisit: [MarkingGraph] = [input]
+
+      while let current = nodeToVisit.popLast(){
+        visitedNode.append(current)
+        for (_, successor) in current.successors{
+          if !visitedNode.contains(where: {$0 === successor}) && !nodeToVisit.contains(where: {$0 === successor}){
+            nodeToVisit.append(successor)
+          }
+        }
+      }
+      return visitedNode.count
+    }
+    public func isTwoSmokers(input:MarkingGraph) -> Bool{
+      var visitedNode: [MarkingGraph] = []
+      var nodeToVisit: [MarkingGraph] = [input]
+
+      while let current = nodeToVisit.popLast(){
+        visitedNode.append(current)
+        for (place, token) in current.marking{
+          var nbSmoke = 0;
+          for (place, token) in current.marking {
+            if (place.name == "s1" || place.name == "s2" || place.name == "s3"){
+              nbSmoke += Int(token)
+            }
+          }
+          if (nbSmoke > 1) {
+            return true
+          }
+        }
+        for (_, successor) in current.successors{
+          if !visitedNode.contains(where: {$0 === successor}) && !nodeToVisit.contains(where: {$0 === successor}){
+            nodeToVisit.append(successor)
+          }
+        }
+      }
+      return false
+    }
+    public func isTwoRecipe(input:MarkingGraph) -> Bool{
+      var visitedNode: [MarkingGraph] = []
+      var nodeToVisit: [MarkingGraph] = [input]
+
+      while let current = nodeToVisit.popLast(){
+        visitedNode.append(current)
+        for (place, token) in current.marking{
+          if place.name == "p" || place.name == "m" || place.name == "t"{
+            if(token > 1){
+                 return true
+            }
+          }
+        }
+        for (_, successor) in current.successors{
+          if !visitedNode.contains(where: {$0 === successor}) && !nodeToVisit.contains(where: {$0 === successor}){
+            nodeToVisit.append(successor)
+          }
+        }
+      }
+      return false
     }
 
 }
 
 public extension PTNet {
+  public func markingGraph(from marking: PTMarking) -> MarkingGraph? {
+      // Write here the implementation of the marking graph generation.
 
-    public func markingGraph(from marking: PTMarking) -> MarkingGraph? {
-        let m0:MarkingGraph = MarkingGraph(marking: marking)
-        var visitedNode:[MarkingGraph] = [m0]
-        var nodeToVisit:[MarkingGraph] = [m0]
-        while let curr = nodeToVisit.popLast(){
-          visitedNode.append(curr)
-          for tran in transitions{
-            if let firedTran = tran.fire(from: curr.marking){
-              if let visited = visitedNode.first(where: {$0.marking == firedTran}){
-                curr.successors[tran] = visited
-              } else{
-                let temp:MarkingGraph = MarkingGraph(marking: firedTran)
-                if !visitedNode.contains{$0 === temp}{
-                  curr.successors[tran] = temp
-                  nodeToVisit.append(temp)
-                  m0.state.append(temp)
-                }
+      let m0 = MarkingGraph(marking: marking)
+      var nodeToVisit : [MarkingGraph] = [m0]
+      var visitedNode : [MarkingGraph] = []
+
+      while(!nodeToVisit.isEmpty) {
+          let cur = nodeToVisit.remove(at:0)
+          visitedNode.append(cur)
+
+          for tran in transitions {
+              if let firedMark = tran.fire(from: cur.marking) {
+                      if let alreadyVisitedNode = visitedNode.first(where: { $0.marking == firedMark }) {
+                          cur.successors[tran] = alreadyVisitedNode
+                      } else {
+                          let temp = MarkingGraph(marking: firedMark)
+                          cur.successors[tran] = temp
+                          if (!nodeToVisit.contains(where: { $0.marking == temp.marking})) {
+                              nodeToVisit.append(temp)
+                          }
+                  }
               }
-            }
           }
-        }
-        print("\(visitedNode)")
-        return m0
-    }
-
+      }
+      return m0
+  }
 }

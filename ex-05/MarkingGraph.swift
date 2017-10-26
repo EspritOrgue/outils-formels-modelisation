@@ -26,6 +26,21 @@ func countMark(input:MarkingGraph) -> Int{
   return visitedNode.count
 }
 
+func smokerCount(input:MarkingGraph) -> Int{
+  var visitedNode = [input]
+  var nodeToVisit = [input]
+
+  while let current = nodeToVisit.popLast(){
+    for (_, successor) in current.successors{
+      if !visitedNode.contains(where: {$0 === successor}){
+        visitedNode.append(successor)
+        nodeToVisit.append(successor)
+      }
+    }
+  }
+  return visitedNode.count
+}
+
 // Ex. 1: Mutual exclusion
 do {
     // Write your code here ...
