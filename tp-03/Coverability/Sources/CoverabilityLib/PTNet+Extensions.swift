@@ -67,7 +67,7 @@ public extension PTNet {
       }
       return temp
     }
-    
+
     public func coverabilityGraph(from marking0: CoverabilityMarking) -> CoverabilityGraph? {
         // Write here the implementation of the coverability graph generation.
 
