@@ -2,7 +2,7 @@ import PetriKit
 
 public extension PTNet {
     // Transforme un marquage pour le graphe de couverture en un marquage tirable
-    public func coverabilityToPTMarking(with marking : CoverabilityMarking, and p : [PTPlace]) -> PTMarking{
+    public func convToPT(with marking : CoverabilityMarking, and p : [PTPlace]) -> PTMarking{
       var m : PTMarking = [:]
 
       for temp in p
@@ -14,7 +14,7 @@ public extension PTNet {
     }
 
     // Transforme un marquage tirable en un marquage pour le graphe de couverture
-    public func ptmarkingToCoverability(with marking: PTMarking, and p : [PTPlace]) ->CoverabilityMarking{
+    public func ptToConv(with marking: PTMarking, and p : [PTPlace]) ->CoverabilityMarking{
       var temp : CoverabilityMarking = [:]
       for val in p
       {
@@ -55,7 +55,7 @@ public extension PTNet {
     }
 
     // Permet l'ajout de omega comme token si nécessaire
-    public func Omega(from comp : CoverabilityMarking, with marking : CoverabilityMarking, and p : [PTPlace])  -> CoverabilityMarking?
+    public func convertOmega(from comp : CoverabilityMarking, with marking : CoverabilityMarking, and p : [PTPlace])  -> CoverabilityMarking?
     {
       var temp = marking
       for t in p
@@ -95,10 +95,10 @@ public extension PTNet {
           // Seconde boucle qui itère les transitions et créée les marquages du graphe de couverture
           for tran in transitionsC{
             // Transforme le marquage en quekque chose de tirable
-            let ptMarking = coverabilityToPTMarking(with: markingList[count], and: placesC)
+            let ptMarking = convToPT(with: markingList[count], and: placesC)
             if let firedTran = tran.fire(from: ptMarking){
               // Reconvertit en marquage pour el graphe de couverture
-              let convMarking = ptmarkingToCoverability(with: firedTran, and: placesC)
+              let convMarking = ptToConv(with: firedTran, and: placesC)
               // // Crée le noeud du marquage
               let nouvCouv = CoverabilityGraph(marking: convMarking, successors: [:])
               // Ajoute le nouvau noeud au successeur
@@ -114,7 +114,7 @@ public extension PTNet {
               {
                 if (cur > 1)
                 {
-                  this = Omega(from : markingList[cur-2], with : this, and : placesC)!
+                  this = convertOmega(from : markingList[cur-2], with : this, and : placesC)!
                 }
                  // On ajoute le noeud à la liste
                 graphList.append(returnedGraph)
