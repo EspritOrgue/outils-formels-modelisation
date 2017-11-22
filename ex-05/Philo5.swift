@@ -11,20 +11,6 @@ public class MarkingGraph {
     }
 
 }
-func countMark(input:MarkingGraph) -> Int{
-  var visitedNode = [input]
-  var nodeToVisit = [input]
-
-  while let current = nodeToVisit.popLast(){
-    for (_, successor) in current.successors{
-      if !visitedNode.contains(where: {$0 === successor}){
-        visitedNode.append(successor)
-        nodeToVisit.append(successor)
-      }
-    }
-  }
-  return visitedNode.count
-}
 
 let m0 = MarkingGraph(marking: ["a0": 1, "b0": 0, "f2": 1, "a2": 1, "b4": 0, "b1": 0, "f0": 1, "b3": 0, "f1": 1, "a1": 1, "b2": 0, "a4": 1, "f4": 1, "f3": 1, "a3": 1])
 let m1 = MarkingGraph(marking: ["a0": 1, "b0": 0, "f2": 1, "a2": 1, "b4": 0, "b1": 0, "f0": 1, "b3": 1, "f1": 1, "a1": 1, "b2": 0, "a4": 1, "f4": 0, "f3": 0, "a3": 0])
@@ -48,5 +34,3 @@ m7.successors = ["t0": m0, "e2": m6, "e3": m2]
 m8.successors = ["e1": m9, "e2": m5, "t4": m0]
 m9.successors = ["t4": m10, "t1": m8]
 m10.successors = ["e3": m3, "e4": m9, "t1": m0]
-
-print("1. \(countMark(input: m0))")
