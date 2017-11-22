@@ -28,7 +28,7 @@ class CoverabilityLibTests: XCTestCase {
         let initialMarking: CoverabilityMarking =
             [r: 1, p: 0, t: 0, m: 0, w1: 1, s1: 0, w2: 1, s2: 0, w3: 1, s3: 0]
         let coverabilityGraph = model.coverabilityGraph(from: initialMarking)
-        XCTAssertEqual(coverabilityGraph.count, 32)
+        XCTAssertEqual(coverabilityGraph!.count, 10)
     }
 
     func testUnboundedGraph() {

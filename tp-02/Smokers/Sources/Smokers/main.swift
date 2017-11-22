@@ -25,4 +25,10 @@ let initialMarking: PTMarking = [r: 1, p: 0, t: 0, m: 0, w1: 1, s1: 0, w2: 1, s2
 // Create the marking graph (if possible).
 if let markingGraph = model.markingGraph(from: initialMarking) {
     // Write here the code necessary to answer questions of Exercise 4.
+    print("4.1")
+    print(markingGraph.countMark(input: markingGraph))
+    print("\n4.2")
+    print(markingGraph.isTwoSmokers(input: markingGraph))
+    print("\n4.3")
+    print(markingGraph.isTwoIng(input: markingGraph))
 }

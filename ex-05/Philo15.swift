@@ -12,6 +12,27 @@ public class MarkingGraph {
 
 }
 
+func countMark(input:MarkingGraph) -> Int{
+  var visitedNode = [input]
+  var nodeToVisit = [input]
+
+  while let current = nodeToVisit.popLast(){
+    for (_, successor) in current.successors{
+      if !visitedNode.contains(where: {$0 === successor}){
+        visitedNode.append(successor)
+        nodeToVisit.append(successor)
+
+        // Check here for supp questions
+        //if marking.first{$0.1 >1} != nil{
+        //  return true
+        //}
+        // Return a MarkingGraph, not use print
+      }
+    }
+  }
+  return visitedNode.count
+}
+
 let m0 = MarkingGraph(marking: ["f12": 1, "b14": 0, "a15": 1, "a11": 1, "a14": 1, "b15": 0, "a2": 1, "f8": 1, "a12": 1, "f13": 1, "f15": 1, "b4": 0, "b6": 0, "b1": 0, "f5": 1, "f14": 1, "a4": 1, "a10": 1, "f6": 1, "f3": 1, "b11": 0, "b9": 0, "a3": 1, "b0": 0, "f2": 1, "b13": 0, "a8": 1, "f10": 1, "a7": 1, "b10": 0, "f11": 1, "f0": 1, "a5": 1, "b3": 0, "f1": 1, "a1": 1, "b2": 0, "b5": 0, "f4": 1, "b7": 0, "a13": 1, "b12": 0, "f7": 1, "a6": 1, "a9": 1, "b8": 0, "f9": 1, "a0": 1])
 let m1 = MarkingGraph(marking: ["f12": 1, "b14": 0, "a15": 1, "a11": 1, "a14": 1, "b15": 0, "a2": 1, "f8": 1, "a12": 1, "f13": 1, "f15": 1, "b4": 0, "b6": 0, "b1": 0, "f5": 0, "f14": 1, "a4": 1, "a10": 1, "f6": 0, "f3": 1, "b11": 0, "b9": 0, "a3": 1, "b0": 0, "f2": 1, "b13": 0, "a8": 1, "f10": 1, "a7": 1, "b10": 0, "f11": 1, "f0": 1, "a5": 0, "b3": 0, "f1": 1, "a1": 1, "b2": 0, "b5": 1, "f4": 1, "b7": 0, "a13": 1, "b12": 0, "f7": 1, "a6": 1, "a9": 1, "b8": 0, "f9": 1, "a0": 1])
 let m2 = MarkingGraph(marking: ["f12": 1, "b14": 0, "a15": 0, "a11": 1, "a14": 1, "b15": 1, "a2": 1, "f8": 1, "a12": 1, "f13": 1, "f15": 0, "b4": 0, "b6": 0, "b1": 0, "f5": 0, "f14": 1, "a4": 1, "a10": 1, "f6": 0, "f3": 1, "b11": 0, "b9": 0, "a3": 1, "b0": 0, "f2": 1, "b13": 0, "a8": 1, "f10": 1, "a7": 1, "b10": 0, "f11": 1, "f0": 0, "a5": 0, "b3": 0, "f1": 1, "a1": 1, "b2": 0, "b5": 1, "f4": 1, "b7": 0, "a13": 1, "b12": 0, "f7": 1, "a6": 1, "a9": 1, "b8": 0, "f9": 1, "a0": 1])
@@ -4426,3 +4447,5 @@ m2203.successors = ["e1": m1522, "e10": m1571, "e0": m1802, "e11": m952, "e12": 
 m2204.successors = ["e10": m701, "e3": m1802, "t0": m0, "e11": m377, "e12": m1687, "e13": m96, "e9": m1801, "e8": m1098, "e7": m379, "e2": m1685, "e4": m1082, "e14": m372, "e6": m1787, "e5": m2189]
 m2205.successors = ["e1": m1382, "e0": m701, "e3": m1571, "e12": m1358, "e13": m153, "e8": m821, "e2": m830, "e7": m844, "e4": m447, "e14": m659, "t10": m0, "e15": m1384, "e6": m449, "e5": m2190]
 m2206.successors = ["t1": m0, "e10": m1382, "e3": m1522, "e11": m280, "e12": m1464, "e13": m1520, "e9": m1504, "e8": m1302, "e7": m979, "e4": m1449, "e14": m1478, "e15": m1463, "e6": m201, "e5": m2191]
+
+print("1. \(countMark(input: m0))")
