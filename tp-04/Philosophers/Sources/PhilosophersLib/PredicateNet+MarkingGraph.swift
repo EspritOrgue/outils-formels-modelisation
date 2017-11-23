@@ -25,8 +25,9 @@ extension PredicateNet {
               // Initialisation des successeurs
               cur.successors[tran] = [:]
               // Lancement des differents binding pour la transition et le marquage courant
-              let bindings: [PredicateTransition<T>.Binding] = tran.fireableBingings(from: cur.marking)
-              for bind in bindings{
+              let binding: [PredicateTransition<T>.Binding] = tran.fireableBingings(from: cur.marking)
+              // On parcout les bindings
+              for bind in binding{
                 // Lance la transition avec la transition, le binding et le marquage courant
                 let newMarking = PredicateMarkingNode(marking: tran.fire(from: cur.marking, with:bind)!)
                 // Itère sur les éléments déjà existant pour éviter les boucles infinis (cas des graphes unbounded)
