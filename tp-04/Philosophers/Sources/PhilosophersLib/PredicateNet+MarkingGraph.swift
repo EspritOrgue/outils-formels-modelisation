@@ -45,7 +45,7 @@ extension PredicateNet {
                     // On l'ajoute au successeurs
                     cur.successors[tran]![bind] = knownMarking
                 }else if(!nodeToVisit.contains(where: { PredicateNet.equals($0.marking, newMarking.marking) })) {
-                    // On l'ajoute
+                    // On l'ajoute à la liste des noeuds à visiter
                     nodeToVisit.append(newMarking)
                     // Et on l'ajoute au successeurs
                     cur.successors[tran]![bind] = newMarking
