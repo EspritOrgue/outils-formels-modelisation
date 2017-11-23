@@ -22,7 +22,7 @@ extension PredicateNet {
             let cur = nodeToVisit.popLast()!
             // Boucle les transitions
             for tran in transitions {
-              // Initialisation des successeurs
+              // Initialisation des successeu
               cur.successors[tran] = [:]
               // Lancement des differents binding pour la transition et le marquage courant
               let binding: [PredicateTransition<T>.Binding] = tran.fireableBingings(from: cur.marking)
