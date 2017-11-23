@@ -13,7 +13,46 @@ extension PredicateNet {
         // You may use these methods to check if you've already visited a marking, or if the model
         // is unbounded.
 
-        return nil
+        // Initialisation des variables de base
+        let initial = PredicateMarkingNode<T>(marking: marking)
+        var nodeToVisit: [PredicateMarkingNode<T>] = [initial]
+        // Tant que la liste de noeud à visiter n'est pas vide
+        while(!nodeToVisit.isEmpty){
+            // On récupère l'élément
+            let cur = nodeToVisit.popLast()!
+            // Boucle les transitions
+            for tran in transitions {
+              // Initialisation des successeurs
+              cur.successors[tran] = [:]
+              // Lancement des differents binding pour la transition et le marquage courant
+              let bindings: [PredicateTransition<T>.Binding] = tran.fireableBingings(from: cur.marking)
+              for bind in bindings{
+                // Lance la transition avec la transition, le binding et le marquage courant
+                let newMarking = PredicateMarkingNode(marking: tran.fire(from: cur.marking, with:bind)!)
+                // Itère sur les éléments déjà existant pour éviter les boucles infinis (cas des graphes unbounded)
+                for i in initial{
+                    // Si le nouveau marquage est plus grand qu'un marquage
+                    if (PredicateNet.greater(newMarking.marking, i.marking))
+                    {
+                        // On retourne nil
+                        return nil
+                    }
+                }
+                // Si le marquage a déjà été visité
+                if let knownMarking = initial.first(where:{PredicateNet.equals($0.marking, newMarking.marking)})
+                {
+                    // On l'ajoute au successeurs
+                    cur.successors[tran]![bind] = knownMarking
+                }else if(!nodeToVisit.contains(where: { PredicateNet.equals($0.marking, newMarking.marking) })) {
+                    // On l'ajoute
+                    nodeToVisit.append(newMarking)
+                    // Et on l'ajoute au successeurs
+                    cur.successors[tran]![bind] = newMarking
+                }
+              }
+            }
+        }
+        return initial
     }
 
     // MARK: Internals
