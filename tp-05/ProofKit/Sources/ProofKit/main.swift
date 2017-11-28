@@ -1,5 +1,37 @@
 import ProofKitLib
 
+//Exercice 9
+do{
+  let a: Formula = "a"
+  let b: Formula = "b"
+  let c: Formula = "c"
+
+  let f = !(a && (b || c))
+  print("2.1")
+  print(f)
+  print("NNF: \(f.nnf)")
+}
+do{
+  let a: Formula = "a"
+  let b: Formula = "b"
+  let c: Formula = "c"
+
+  let f = (a => b) || !(a && c)
+  print("2.2")
+  print(f)
+  print("NNF: \(f.nnf)")
+}
+do{
+  let a: Formula = "a"
+  let b: Formula = "b"
+  let c: Formula = "c"
+
+let f = (!a || b && c) && a
+  print("2.3")
+  print(f)
+  print("NNF: \(f.nnf)")
+}
+// ------
 let a: Formula = "a"
 let b: Formula = "b"
 let f = a && b
