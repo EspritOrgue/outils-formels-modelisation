@@ -1,6 +1,7 @@
 import ProofKitLib
 
 //Exercice 9
+print("Série d'ecercice 9")
 do{
   let a: Formula = "a"
   let b: Formula = "b"
@@ -10,6 +11,8 @@ do{
   print("2.1")
   print(f)
   print("NNF: \(f.nnf)")
+  print("CNF: \(f.cnf)")
+  print("DNF: \(f.dnf)")
 }
 do{
   let a: Formula = "a"
@@ -20,6 +23,8 @@ do{
   print("2.2")
   print(f)
   print("NNF: \(f.nnf)")
+  print("CNF: \(f.cnf)")
+  print("DNF: \(f.dnf)")
 }
 do{
   let a: Formula = "a"
@@ -30,6 +35,8 @@ let f = (!a || b && c) && a
   print("2.3")
   print(f)
   print("NNF: \(f.nnf)")
+  print("CNF: \(f.cnf)")
+  print("DNF: \(f.dnf)")
 }
 // ------
 let a: Formula = "a"
