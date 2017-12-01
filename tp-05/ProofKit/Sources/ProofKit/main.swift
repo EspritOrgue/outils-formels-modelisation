@@ -9,7 +9,7 @@ do{
 
   let f = !(a && (b || c))
   print("2.1")
-  print(f)
+  print("Expression: \(f)")
   print("NNF: \(f.nnf)")
   print("CNF: \(f.cnf)")
   print("DNF: \(f.dnf)")
@@ -21,7 +21,7 @@ do{
 
   let f = (a => b) || !(a && c)
   print("2.2")
-  print(f)
+  print("Expression: \(f)")
   print("NNF: \(f.nnf)")
   print("CNF: \(f.cnf)")
   print("DNF: \(f.dnf)")
@@ -33,7 +33,7 @@ do{
 
 let f = (!a || b && c) && a
   print("2.3")
-  print(f)
+  print("Expression: \(f)")
   print("NNF: \(f.nnf)")
   print("CNF: \(f.cnf)")
   print("DNF: \(f.dnf)")

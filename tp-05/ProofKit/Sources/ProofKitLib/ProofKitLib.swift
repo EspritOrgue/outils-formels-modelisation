@@ -105,7 +105,7 @@ public enum Formula {
               return (b.dnf && d.dnf) || (b.dnf && e.dnf)
             // b && (d && e)
             case .conjunction(let d, let e):
-              return (b.dnf && d.dnf && e.dnf)
+              return b.dnf && d.dnf && e.dnf
             // b && (d -> e)
             case .implication(_):
               return b.dnf  && (!c.dnf).dnf
@@ -123,7 +123,7 @@ public enum Formula {
                 return (b.dnf && d.dnf) || (b.dnf && e.dnf)
               // b && (d && e)
               case .conjunction(let d, let e):
-                return (b.dnf && d.dnf && e.dnf)
+                return b.dnf && d.dnf && e.dnf
               // b && (d -> e)
               case .implication(_):
                 return b.dnf  && (!c.dnf).dnf
@@ -202,7 +202,7 @@ public enum Formula {
               return b.cnf || c.cnf
             // b || (d || e)
             case .disjunction(let d, let e):
-              return (b.cnf || d.cnf || e.cnf)
+              return b.cnf || d.cnf || e.cnf
             // b || (d && e)
             case .conjunction(let d, let e):
               return (b.cnf || d.cnf) && (b.cnf || e.cnf)
@@ -220,7 +220,7 @@ public enum Formula {
               return b.cnf || c.cnf
             // b || (d || e)
             case .disjunction(let d, let e):
-              return (b.cnf || d.cnf || e.cnf)
+              return b.cnf || d.cnf || e.cnf
             // b || (d && e)
             case .conjunction(let d, let e):
               return (b.cnf || d.cnf) && (b.cnf || e.cnf)
@@ -241,7 +241,7 @@ public enum Formula {
               return d.cnf || e.cnf || f.cnf || g.cnf
             // (d || e) || (f && g)
             case .conjunction(let f, let g):
-              return (d.cnf || e.cnf) || (f.cnf && g.cnf)
+              return ((d.cnf || f.cnf) && (d.cnf || g.cnf)) || ((e.cnf || f.cnf) && (e.cnf || g.cnf))
             // (d || e) || (f -> g)
             case .implication(_):
               return (d.cnf || e.cnf) || (!c.cnf).cnf
@@ -256,10 +256,10 @@ public enum Formula {
               return (c.cnf || d.cnf) && (c.cnf || e.cnf)
             // (d && e) || (f || g)
             case .disjunction(let f, let g):
-              return (d.cnf && e.cnf) || (f.cnf || g.cnf)
+              return ((d.cnf || f.cnf) && (d.cnf || g.cnf)) || ((e.cnf || f.cnf) && (e.cnf || g.cnf))
             // (d & e) || (f && g)
             case .conjunction(let f, let g):
-              return (d.cnf && e.cnf) || (f.cnf && g.cnf)
+              return (d.cnf || f.cnf) && (d.cnf || g.cnf) && (e.cnf || f.cnf) && (e.cnf || g.cnf)
             // (d && e) || (f -> g)
             case .implication(_):
               return (d.cnf && e.cnf) || (!c.cnf).cnf
