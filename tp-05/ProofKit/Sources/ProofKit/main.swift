@@ -1,7 +1,7 @@
 import ProofKitLib
 
 //Exercice 9
-print("Série d'ecercice 9")
+print("Série d'ecercice 9 (Test pour le tp)")
 do{
   let a: Formula = "a"
   let b: Formula = "b"
@@ -31,7 +31,7 @@ do{
   let b: Formula = "b"
   let c: Formula = "c"
 
-let f = (!a || b && c) && a
+  let f = (!a || b && c) && a
   print("2.3")
   print("Expression: \(f)")
   print("NNF: \(f.nnf)")
@@ -39,6 +39,7 @@ let f = (!a || b && c) && a
   print("DNF: \(f.dnf)")
 }
 // ------
+print("-----------\n")
 let a: Formula = "a"
 let b: Formula = "b"
 let f = a && b

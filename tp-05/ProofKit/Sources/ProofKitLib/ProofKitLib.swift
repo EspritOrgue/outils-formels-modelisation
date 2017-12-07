@@ -75,6 +75,7 @@ public enum Formula {
         switch self{
         case .proposition(_):
           return self
+
         case .negation(let a):
           switch a {
           case .proposition(_):
@@ -88,8 +89,10 @@ public enum Formula {
           case .implication(_):
               return (!a.dnf).dnf
           }
+
         case .disjunction(let b, let c):
           return b.dnf || c.dnf
+
         case .conjunction(let b, let c):
           switch b{
           case .proposition(_):
@@ -167,111 +170,44 @@ public enum Formula {
           case .implication(_):
             return (!b.dnf).dnf
           }
+
         case .implication(let b, let c):
           return (!b).dnf || c.dnf
         }
     }
 
     /// The conjunctive normal form of the formula.
+    //  Simplified version using the two other methods
     public var cnf: Formula {
-        switch self{
-        case .proposition(_):
-          return self
-        case .negation(let a):
-          switch a {
-          case .proposition(_):
-              return self
-          case .negation(let b):
-              return b.cnf
-          case .disjunction(let b, let c):
-              return (!b).cnf && (!c).cnf
-          case .conjunction(let b, let c):
-              return (!b).cnf || (!c).cnf
-          case .implication(_):
-              return (!a.cnf).cnf
-          }
-        case .disjunction(let b, let c):
-          switch b{
-          case .proposition(_):
-            switch c{
-            // b || c
-            case .proposition(_):
-              return b.cnf || c.cnf
-            // b || ¬c
-            case .negation(_):
-              return b.cnf || c.cnf
-            // b || (d || e)
-            case .disjunction(let d, let e):
-              return b.cnf || d.cnf || e.cnf
-            // b || (d && e)
-            case .conjunction(let d, let e):
-              return (b.cnf || d.cnf) && (b.cnf || e.cnf)
-            // b || (d -> e)
-            case .implication(_):
-              return b.cnf  || (!c.cnf).cnf
+        switch self.nnf { // The method transforms the formula using nnf
+
+        case .proposition(_): // Return the nnf version if it's a proposition
+            return self.nnf
+
+        case .negation(_): // Same if it's a negation
+            return self.nnf
+
+        case .conjunction(let a, let b): // The conjuction is what we want so we return it
+            return a.cnf && b.cnf
+
+        case .disjunction(let a, let b): // If it's a disjonction
+            switch a.cnf {               // The case of the first element
+
+            case .conjunction(let c, let d):  // If it's a conjunction
+                return (b || c).cnf && (b || d).cnf // We distribute the disjonction
+            default: break // Break the switch if it's something else
             }
-          case .negation(_):
-            switch c{
-            // b || c
-            case .proposition(_):
-              return b.cnf || c.cnf
-            // b || ¬c
-            case .negation(_):
-              return b.cnf || c.cnf
-            // b || (d || e)
-            case .disjunction(let d, let e):
-              return b.cnf || d.cnf || e.cnf
-            // b || (d && e)
-            case .conjunction(let d, let e):
-              return (b.cnf || d.cnf) && (b.cnf || e.cnf)
-            // b || (d -> e)
-            case .implication(_):
-              return b.cnf  || (!c.cnf).cnf
+
+            switch b.cnf { // Same for the second element
+            case .conjunction(let c, let d):
+                return (a || c).cnf && (a||d).cnf
+            default: break
             }
-          case .disjunction(let d, let e):
-            switch c{
-            // (d || e) || c
-            case .proposition(_):
-              return d.cnf || e.cnf || c.cnf
-            // (d || e) || ¬c
-            case .negation(_):
-              return d.cnf || e.cnf || c.cnf
-            // (d || e) || (f || g)
-            case .disjunction(let f, let g):
-              return d.cnf || e.cnf || f.cnf || g.cnf
-            // (d || e) || (f && g)
-            case .conjunction(let f, let g):
-              return ((d.cnf || f.cnf) && (d.cnf || g.cnf)) || ((e.cnf || f.cnf) && (e.cnf || g.cnf))
-            // (d || e) || (f -> g)
-            case .implication(_):
-              return (d.cnf || e.cnf) || (!c.cnf).cnf
-            }
-          case .conjunction(let d, let e):
-            switch c{
-            // (d && e) || c
-            case .proposition(_):
-              return (c.cnf || d.cnf) && (c.cnf || e.cnf)
-            // ¬(d && e) || ¬c
-            case .negation(_):
-              return (c.cnf || d.cnf) && (c.cnf || e.cnf)
-            // (d && e) || (f || g)
-            case .disjunction(let f, let g):
-              return ((d.cnf || f.cnf) && (d.cnf || g.cnf)) || ((e.cnf || f.cnf) && (e.cnf || g.cnf))
-            // (d & e) || (f && g)
-            case .conjunction(let f, let g):
-              return (d.cnf || f.cnf) && (d.cnf || g.cnf) && (e.cnf || f.cnf) && (e.cnf || g.cnf)
-            // (d && e) || (f -> g)
-            case .implication(_):
-              return (d.cnf && e.cnf) || (!c.cnf).cnf
-            }
-          case .implication(_):
-            return (!b.cnf).cnf
-          }
-        case .conjunction(let b, let c):
-          return b.cnf && c.cnf
-        case .implication(let b, let c):
-          return (!b).cnf || c.cnf
-      }
+            return self.dnf // Else it returns it returns its dnf since it will be equal
+
+        case .implication(_): // nnf is managing the implication case
+            return self.nnf
+        }
     }
 
     /// The propositions the formula is based on.
